@@ -3,15 +3,18 @@
 # base ----------------------------------------
 
 matplotlib>=3.2.2
-numpy>=1.18.5
-opencv-python>=4.1.2
-Pillow>=7.1.2
+opencv-python>=4.6.0
 PyYAML>=5.3.1
-requests>=2.23.0
-scipy>=1.4.1
-torch>=1.7.0
-torchvision>=0.8.1
 tqdm>=4.41.0
+
+# PyTorch CUDA GPU restricted lines, in Windows 10 conda environment, comment these out
+#numpy>=1.18.5
+#Pillow>=7.1.2
+#requests>=2.23.0
+#scipy>=1.4.1
+#torch==1.10.1
+#torchvision==0.11.2
+#torchaudio==0.10.1
 
 # plotting ------------------------------------
 
@@ -35,3 +38,23 @@ flake8
 yapf
 isort==4.3.21
 imageio
+
+# oak-lite-d support -------------------------------
+#pyvirtualcam
+#requests==2.28.0
+#argcomplete==1.12.1
+#blobconverter==1.0.0
+#pyrebase4==4.5
+#pytube==11.0.0
+#--extra-index-url https://www.piwheels.org/simple
+#opencv-python==4.5.4.58 ; platform_machine != "aarch64" and platform_machine != "armv6l" and platform_machine != "armv7l" and python_version == "3.10"
+#opencv-python==4.5.1.48 ; platform_machine != "aarch64" and platform_machine != "armv6l" and platform_machine != "armv7l" and python_version != "3.10"
+#opencv-contrib-python==4.5.4.58 ; platform_machine != "aarch64" and platform_machine != "armv6l" and platform_machine != "armv7l" and python_version == "3.10"
+#opencv-contrib-python==4.5.1.48 ; platform_machine != "aarch64" and platform_machine != "armv6l" and platform_machine != "armv7l" and python_version != "3.10"
+#opencv-python==4.4.0.46 ; platform_machine == "armv6l" or platform_machine == "armv7l"
+#opencv-contrib-python==4.4.0.46 ; platform_machine == "armv6l" or platform_machine == "armv7l"
+#-e ./depthai_sdk
+#--extra-index-url https://artifacts.luxonis.com/artifactory/luxonis-depthai-data-local/wheels/
+#pyqt5>5,<5.15.6 ; platform_machine != "armv6l" and platform_machine != "armv7l" and platform_machine != "aarch64"
+#--extra-index-url https://artifacts.luxonis.com/artifactory/luxonis-python-snapshot-local/
+#depthai==2.16.0.0

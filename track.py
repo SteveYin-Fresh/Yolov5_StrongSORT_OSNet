@@ -42,6 +42,9 @@ logging.getLogger().removeHandler(logging.getLogger().handlers[0])
 @torch.no_grad()
 def run(
         source='0',
+        source_width=640,
+        source_height=480,
+        source_flip=False,
         yolo_weights=WEIGHTS / 'yolov5m.pt',  # model.pt path(s),
         strong_sort_weights=WEIGHTS / 'osnet_x0_25_msmt17.pt',  # model.pt path,
         config_strongsort=ROOT / 'strong_sort/configs/strong_sort.yaml',
@@ -72,6 +75,8 @@ def run(
         dnn=False,  # use OpenCV DNN for ONNX inference
 ):
 
+    print(source, source_width, source_height, source_flip)
+    
     source = str(source)
     save_img = not nosave and not source.endswith('.txt')  # save inference images
     is_file = Path(source).suffix[1:] in (VID_FORMATS)
@@ -101,7 +106,8 @@ def run(
     if webcam:
         show_vid = check_imshow()
         cudnn.benchmark = True  # set True to speed up constant image size inference
-        dataset = LoadStreams(source, img_size=imgsz, stride=stride, auto=pt)
+        dataset = LoadStreams(source, img_size=imgsz, stride=stride, auto=pt, source_width=source_width, 
+            source_height=source_height, source_flip=source_flip)
         nr_sources = len(dataset)
     else:
         dataset = LoadImages(source, img_size=imgsz, stride=stride, auto=pt)
@@ -278,7 +284,10 @@ def parse_opt():
     parser.add_argument('--yolo-weights', nargs='+', type=str, default=WEIGHTS / 'yolov5m.pt', help='model.pt path(s)')
     parser.add_argument('--strong-sort-weights', type=str, default=WEIGHTS / 'osnet_x0_25_msmt17.pt')
     parser.add_argument('--config-strongsort', type=str, default='strong_sort/configs/strong_sort.yaml')
-    parser.add_argument('--source', type=str, default='0', help='file/dir/URL/glob, 0 for webcam')  
+    parser.add_argument('--source', type=str, default='0', help='file/dir/URL/glob, 0/1/2 for webcam')  
+    parser.add_argument('--source-width', type=int, default=640, help='webcam frame width')  
+    parser.add_argument('--source-height', type=int, default=480, help='webcam frame height')  
+    parser.add_argument('--source-flip', action='store_true', help='webcam frame mirror flip')  
     parser.add_argument('--imgsz', '--img', '--img-size', nargs='+', type=int, default=[640], help='inference size h,w')
     parser.add_argument('--conf-thres', type=float, default=0.5, help='confidence threshold')
     parser.add_argument('--iou-thres', type=float, default=0.5, help='NMS IoU threshold')

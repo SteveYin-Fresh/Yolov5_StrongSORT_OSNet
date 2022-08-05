@@ -37,14 +37,37 @@ This repository contains a highly configurable two-stage-tracker that adjusts to
 
 1. Clone the repository recursively:
 
-`git clone --recurse-submodules https://github.com/mikel-brostrom/Yolov5_StrongSORT_OSNet.git`
+    `git clone --recurse-submodules https://github.com/mikel-brostrom/Yolov5_StrongSORT_OSNet.git`
 
-If you already cloned and forgot to use `--recurse-submodules` you can run `git submodule update --init`
+    If you already cloned and forgot to use `--recurse-submodules` you can run `git submodule update --init`
 
-2. Make sure that you fulfill all the requirements: Python 3.8 or later with all [requirements.txt](https://github.com/mikel-brostrom/Yolov5_DeepSort_Pytorch/blob/master/requirements.txt) dependencies installed, including torch>=1.7. To install, run:
+2. If you want to use PyTorch with CUDA GPU support in conda environment in Wondows 10, follow these steps to avoid the numpy or torch "mkl" version conflicts: 
 
-`pip install -r requirements.txt`
+    1). Create a new env of python 3.8.13 and numpy, with nomkl (specify conda-forge channel for nomkl), and activate it to continue the installation:
 
+    `conda create -n yourenvname -c conda-forge nomkl python=3.8.13 numpy nomkl`
+    
+    `conda activate yourenvname`
+
+    2). Then, install PyTorch with CUDA support using pip (in this case, use cudatoolkit11.3 version):
+
+    `pip install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu113`
+
+    3). Do not use conda to install PyTorch with cudatoolkit such as the command below, as it will generate version incompatibility error during the installation.
+
+    ~~`conda install pytorch==1.10.1 torchvision==0.11.2 torchaudio==0.10.1 cudatoolkit=11.3 -c pytorch -c conda-forge`~~
+
+    4). Lastly, pip install the rest using requirements.txt (with appropriate lines commented out):
+    `pip install -r requirements.txt`
+
+3. Otherwise, you can use just CPU support of PyTorch. Make sure that you fulfill all the requirements: Python 3.8 or later with all [requirements.txt](https://github.com/mikel-brostrom/Yolov5_DeepSort_Pytorch/blob/master/requirements.txt) dependencies installed, including torch>=1.7 (all the PyTorch CUDA GPU restricted lines need to be uncommented). To install, run:
+
+    `pip install -r requirements.txt`
+
+## A typical usage with video source, on GPU inferencing
+```bash
+$ python track.py --yolo-weights ./weights/yolov5s.pt --strong-sort-weights ./weights/osnet_x0_25_market1501.pt --source ./videos/street01.mp4 --show-vid --imgsz 320 --device 0
+```
 
 ## Tracking sources
 
