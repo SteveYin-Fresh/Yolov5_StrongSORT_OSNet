@@ -6,6 +6,9 @@ matplotlib>=3.2.2
 opencv-python>=4.6.0
 PyYAML>=5.3.1
 tqdm>=4.41.0
+scipy>=1.4.1
+black
+flake8
 
 # PyTorch CUDA GPU restricted lines, in Windows 10 conda environment, comment these out
 #numpy>=1.18.5
